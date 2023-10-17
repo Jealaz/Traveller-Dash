@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Sidebar from "../Components/sidebar";
 import '../Components/style2.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+
 
 
 
