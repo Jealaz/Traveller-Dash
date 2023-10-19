@@ -24,7 +24,7 @@ function Createcomp(){
               <label>Email</label>
             </div>
             <div class="user-box">
-              <input type="password" name="pwd" required="" />
+              <input type="password" name="password" required="" />
               <label>Password</label>
             </div>
             <div class="user-box">

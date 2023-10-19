@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -6,7 +6,29 @@ import Sidebar from '../Components/sidebar.js';
 
 
 
-function Users(){
+class Users extends Component{
+  constructor(){
+    super();
+    this.state = {
+      company: [], //To store the data retrieved from the server
+    }
+  }
+
+  componentDidMount(){
+    //Make the API request to the server to get data
+    // eslint-disable-next-line no-undef
+    axios.get('http://192.168.1.66:3005/api/companies')
+      .then((response) =>{
+        //Successful response
+        this.setState({comapny: response.company});
+      })
+      .catch((error)=>{
+        //Handle any errors
+        console.error('Error fetching data:', error);
+        });
+      }
+
+    render(){
     return(
         <div>
             <Sidebar />
@@ -58,22 +80,19 @@ function Users(){
                         <th scope="col"><span class="th-title">#</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
-                        <th scope="col"><span class="th-title">Image</span>
-                          <i class="bx bx-expand-vertical"></i>
-                        </th>
                         <th scope="col" colspan="2"><span class="th-title">Pseudo</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
-                        <th scope="col"><span class="th-title">Email</span>
+                        <th scope="col" colspan="2"><span class="th-title">Résidence</span>
+                          <i class="bx bx-expand-vertical"></i>
+                        </th>
+                        <th scope="col" colspan="2"><span class="th-title">Occupation</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
                         <th scope="col"><span class="th-title">Contact</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
                         <th scope="col"><span class="th-title">Date Insc</span>
-                          <i class="bx bx-expand-vertical"></i>
-                        </th>
-                        <th scope="col"><span class="th-title">Résidence</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
                         <th scope="col"><span class="th-title">Action</span>
@@ -138,9 +157,7 @@ function Users(){
         
     )
 }
+}
 
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render();
 export default Users;

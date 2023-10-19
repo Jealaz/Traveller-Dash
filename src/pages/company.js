@@ -1,4 +1,4 @@
-import React, { componentDidMount } from 'react';
+import React, { Component }from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
@@ -6,9 +6,37 @@ import Sidebar from '../Components/sidebar.js';
 import axios from 'axios';
 
 
+class Company extends Component {
+  constructor(){
+    super();
+    this.state = {
+      company: [], //To store the data retrieved from the server
+    }
+  }
 
-function Company(){
-  const api = axios.create({
+  componentDidMount(){
+    //Make the API request to the server to get data
+    // eslint-disable-next-line no-template-curly-in-string
+    axios.get('http://192.168.1.66:3005/api/companies/${companyId}')
+      .then((response) =>{
+        //Successful response
+        this.setState({company: response.company});
+      })
+      .catch((error)=>{
+        //Handle any errors
+        console.error('Error fetching data:', error);
+        });
+      }
+
+ /*const [company, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://192.168.1.66:3005/api/companies').then((response) => {
+      setData(response.company);
+    })
+  }, []);
+
+  /*const api = axios.create({
     baseURL : 'http://192.168.1.66:3005/api/companies'
   });
   state = {
@@ -27,7 +55,7 @@ function Company(){
       }
       
         
-         /* render(){
+          render(){
             return (
               <div>
                 <Sidebar/>
@@ -59,14 +87,14 @@ function Company(){
               }*/
 
     //  Request Get to put information
-
+    render(){
     return(
             <div>
             <Sidebar />
 
             <section class="main-content">
               <div id="pre-content" class="p-4">
-                <h3>Utilisateurs</h3>
+                <h3>Compagniess</h3>
                 <div class="d-flex  align-items-center justify-content-start">
                   <div class="mt-3 d-flex flex-row">
                     <div class="mx-3">
@@ -106,7 +134,7 @@ function Company(){
                             <th scope="col"><span class="th-title">Logo</span>
                               <i class="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col" colspan="2"><span class="th-title">Compagnie</span>
+                            <th scope="col"><span class="th-title">Compagnie</span>
                               <i class="bx bx-expand-vertical"></i>
                             </th>
                             <th scope="col"><span class="th-title">Email</span>
@@ -136,13 +164,13 @@ function Company(){
                             <th scope="col"><span class="th-title">Date Insc</span>
                               <i class="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Action </span>
+                            <th scope="col"><span class="th-title">Action</span>
                             </th>
                           </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                          {this.state.companies.map((company) =>(
-                            <tr  key={company._id}>
+                          {this.state.company.map((item) =>(
+                            <tr  key={item._id}>
                                 <td>
                                   <div class="form-check">
                                     <input class=" form-check-input" type="checkbox" name="" id="" />
@@ -153,16 +181,16 @@ function Company(){
                                     <img src="assets/users_img/<?php echo $getListeUsers_resultats->image_user; ?>" alt="" style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}} />
                                   </div>
                                 </td>
-                                <td>{company.compagnie}</td>
-                                <td>{company.email}</td>
-                                <td>{company.destinationTravel}</td>
-                                <td>{company.gareTravel}</td>
-                                <td>{company.tarifTravel}</td>
-                                <td>{company.destinationColis}</td>
-                                <td>{company.gareColis}</td>
-                                <td>{company.TarifColis}</td>
-                                <td>{company.depart}</td>
-                                <td>{company.dateAdded}</td>
+                                <td>{item.compagnie}</td>
+                                <td>{item.email}</td>
+                                <td>{item.destinationTravel}</td>
+                                <td>{item.gareTravel}</td>
+                                <td>{item.tarifTravel}</td>
+                                <td>{item.destinationColis}</td>
+                                <td>{item.gareColis}</td>
+                                <td>{item.TarifColis}</td>
+                                <td>{item.depart}</td>
+                                <td>{item.dateAdded}</td>
                                 <td>
                                   <button type='button' className='btn btn-danger'>Delete</button>
                                 </td>
@@ -178,9 +206,8 @@ function Company(){
           </div>
         )
         }
+}
 
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render();
 export default Company;
