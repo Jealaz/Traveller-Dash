@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDom from 'react-dom/client';
 import { Outlet, Link } from "react-router-dom";
+import { FaBell, FaUser, FaStore, FaHome, FaUserPlus, FaChartBar } from 'react-icons/fa';
 import './styles.css';
 
 
@@ -16,7 +17,7 @@ function Sidebar (){
                             <div href="#" className="nav_link submenu_item">
                                 <Link to="/home" style={{textDecoration:"none", color:"gray"}}>
                                 <span className="navlink_icon">
-                                    <i className="bx bx-home-alt"></i>
+                                    <FaHome />
                                 </span>
                                 <span className="navlink">Accueil</span>
                                 </Link>
@@ -26,7 +27,7 @@ function Sidebar (){
                             <div href="#" className="nav_link submenu_item">
                                 <Link to="/createcomp" className="nav_link">
                                     <span className="navlink_icon">
-                                        <i className="fa-solid fa-percent"></i>
+                                        <FaUserPlus />
                                     </span>
                                     <span className="navlink">Créer un compte</span>
                                 </Link>
@@ -37,18 +38,25 @@ function Sidebar (){
                     <ul className="menu_items">
                         <div className="menu_title menu_editor"></div>
                             <li className="item">
+                                <Link to="/notif" className="nav_link">
+                                    <span className="navlink_icon">
+                                        <FaBell />
+                                    </span>
+                                    <span className="navlink">Notifications</span>
+                                </Link>
+                            </li>
+                            <li className="item">
                                 <Link to="/users" className="nav_link">
                                     <span className="navlink_icon">
-                                        <i className='bx bxs-user-account'></i>
+                                        <FaUser />
                                     </span>
                                     <span className="navlink">Utilisateurs</span>
                                 </Link>
                             </li>
-                        
                             <li className="item">
                                 <Link to="/company" className="nav_link">
                                     <span className="navlink_icon">
-                                        <i className='bx bx-card'></i>
+                                        <FaStore />
                                     </span>
                                     <span className="navlink">Compagnies</span>
                                 </Link>
@@ -56,18 +64,10 @@ function Sidebar (){
                             <li className="item">
                                 <Link to="/transaction" className="nav_link">    
                                     <span className="navlink_icon">
-                                        <i className='bx bx-credit-card'></i>
+                                        <FaChartBar />
                                     </span>
                                     <span className="navlink">Transactions</span>
                                 </Link>
-                            </li>
-                            <li className="item">
-                                <a href="admins.php" className="nav_link">
-                                    <span className="navlink_icon">
-                                        <i className='bx bx-credit-card'></i>
-                                    </span>
-                                    <span className="navlink">Administrateurs</span>
-                                </a>
                             </li>
                     </ul>
                     <div className="bottom_content">

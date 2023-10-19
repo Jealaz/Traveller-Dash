@@ -3,11 +3,70 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Sidebar from '../Components/sidebar.js';
-import Chart from "chart.js/auto";
+import { useRef } from 'react'
+import {
+  Chart as ChartJS,
+  ArcElement,
+  BarElement,
+  CategoryScale, //x
+  LinearScale, //y
+  Tooltip,
+  Legend
+}from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+import {Bar, getElementAtEvent} from 'react-chartjs-2';
 
+ChartJS.register(
+  ArcElement,
+  BarElement,
+  CategoryScale, //x
+  LinearScale, //y
+  Tooltip,
+  Legend
+);
 
 
 function Home (){
+
+  //Bar Statistiques
+  const data ={
+    labels : ['January', 'Feb', 'March', 'April', 
+              'May', 'June', 'July', 'Aug', 
+              'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets : [{
+      label : 'Tickets sold',
+      data : [300, 122, 199, 123, 245, 192, 992, 121, 1003, 300, 1223, 2427],
+      borderColor : 'dark',
+      backgroundColor : 'blue',
+      borderWidth: 1,
+      links : ['https://www.chartjs3.com', 'https://www.chartjs.com', 'https://www.chartjs3.com', 'https://www.chartjs3.com']
+    }]
+
+  };
+
+  //Doughnut Statistiques
+  const datas = {
+    labels : ['Company', 'Users'],
+    datasets : [{
+      label : 'Type account',
+      data : [48, 52],
+      backgroundColor : ['blue', 'orange'],
+      borderColor : 'transparent'
+    }]
+  }
+
+  const options = {
+  };
+
+  const chartRef = useRef();
+  const onClick = (event) => {
+    if(getElementAtEvent(chartRef.current, event).lenght>0){
+    // console.log(getElementAtEvent(chartRef.current, event))
+    const datasetIndexNum = getElementAtEvent(chartRef.current, event)[0].datasetIndex;
+    const dataPoint = getElementAtEvent(chartRef.current, event)[0].index;
+    window.open(console.log(data.datasets[datasetIndexNum].links[dataPoint]), '_blank')
+    }
+  };
     return(
       <div>
              <Sidebar />
@@ -34,44 +93,34 @@ function Home (){
                     <div className="row">
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
                         <h5>
-                          <center>Comptes</center>
+                          <center>Utilisateur</center>
                         </h5>
-                        <span style={{fontStyle: "italic;"}}>
-                          <center> 45 </center>
+                        <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                          <center> 12045 </center>
                         </span>
-                        <span style={{color: "green;"}}>
-                          <center><i className="fa-solid fa-circle-up"></i>
-                          + 12.4% ce mois
-                          </center>
-                        </span> 
+                      </div>
+                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
+                        <h5>
+                          <center>Companies</center>
+                        </h5>
+                        <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                          <center> 168 </center>
+                        </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
                         <h5>
                           <center>Transactions</center>
                         </h5>
-                        <span style={{fontStyle: "italic;"}}>
-                          <center> 1768 </center>
-                        </span>
-                        <span style={{color: "gray;"}}>
-                          <center><i className="fa-solid fa-equals" style={{color:"grey"}}></i>10.4% ce mois </center>
+                        <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                          <center> 3200</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
                         <h5>
-                          <center>Ventes</center>
+                          <center>Notifications</center>
                         </h5>
-                        <span style={{fontStyle: "italic;"}}>
-                          <center> 733000</center>
-                        </span>
-                        <span style={{color: "red;"}}>
-                        <center><i className="fa-solid fa-circle-up" style={{color:"red"}}></i>- 1.2% ce mois </center></span> 
-                      </div>
-                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
-                        <h5>
-                          <center>Total reçu des ventes</center>
-                        </h5>
-                        <span style={{fontStyle: "italic;"}}>
-                          <center> 733000 </center>
+                        <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                          <center> 300 </center>
                         </span>
                       </div>
                     </div>
@@ -83,8 +132,17 @@ function Home (){
                         <div className="header" style={{height:"100%"}}>
                           <h5 className="card-title" style={{fontWeight: "bold"}}>Réservation tickets par mois</h5>
                           <div className="c2 rounded " style={{height:"100%"}}>
-                            <div className="chart-container" style={{position: "relative", height:"90%", width:"100%"}}>
-                              <canvas id="myChart2" role="img" style={{width: "100% !important", height:"100% !important;"}}></canvas>
+                            <div className="chart-container" style={{position: "relative", height:"100%", width:"100%"}}>
+                              <div style={{width: "100% !important", height:"100% !important;"}}>
+                                <Bar
+                                  data = {data}
+                                  options = {options}
+                                  onClick = {onClick}
+                                  ref = {chartRef}
+
+                                  style={{height:"auto"}}
+                                  ></Bar>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -97,56 +155,14 @@ function Home (){
                         <h5 className="card-title" style={{fontWeight: "bold"}}>Types de comptes (%)</h5>
                           <div className="c1 rounded " style={{height:"90%"}}>
                             <div className="chart-container" style={{position: "relative", height:"90%", width:"100%"}}>
-                              <canvas id="myChart" role="img" style={{width: "100% !important", height:"100% !important"}}></canvas>
+                              <Doughnut 
+                              data = {datas}
+                              options = {options}
+                              style={{width: "100% !important", height:"100% !important"}}
+
+                              ></Doughnut>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12 px-2 col-xl-12 mx-1 my-2 h-3" id="t2">
-                      <div className="card shadow-lg" style={{flexDirection: "column",height:"340px",overflow: "hidden",borderRadius: "8px", width:"100%"}}>
-                        <div className="card-body" style={{overflowX: "scroll"}}>
-                          <div className="header" style={{display: "flex", alignItems:"center", justifyContent:"space-between"}}>
-                            <h4>Top Compagnies</h4>
-                            <input className="btn btn-info rounded-3" onclick="location.href=''" type="button" value="Voir plus.." />
-                          </div>
-                          <table className="table table-hover mt-3">
-                            <thead>
-                              <tr>
-                                <th scope="col" style={{textWrap :"nowrap"}}>Compagnie</th>
-                                <th scope="col" style={{textWrap :"nowrap"}}>Vue</th>
-                                <th scope="col" style={{textWrap :"nowrap"}}>Article</th>
-                                <th scope="col" style={{textWrap :"nowrap"}}>Téléphone</th>
-                                <th scope="col" style={{textWrap :"nowrap"}}>Type d'utilisateur</th>
-                              </tr>
-                            </thead>
-                            <tbody style={{fontWeight: "light;"}}>
-                              <tr>
-                                <td >
-                                  <span style={{textWrap :"nowrap"}}>
-                                    Gontougo transport
-                                  </span>
-                                </td>
-                                <td>6768</td>
-                                <td>
-                                  <span style={{textWrap :"nowrap"}}>
-                                    72
-                                  </span>
-                                </td>
-                                <td>
-                                  <span style={{textWrap :"nowrap"}}>
-                                    04993322
-                                  </span>
-                                </td>
-                                <td>
-                                  <span style={{textWrap :"nowrap"}}>
-                                    Bondoukou
-                                  </span>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
                         </div>
                       </div>
                     </div>

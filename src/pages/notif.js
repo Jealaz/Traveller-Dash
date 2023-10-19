@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
@@ -6,16 +6,14 @@ import Sidebar from '../Components/sidebar.js';
 
 
 
-function Transac(){
-  
-
+function Notifs(){
     return(
         <div>
             <Sidebar />
 
             <section class="main-content">
               <div id="pre-content" class="p-4">
-                <h3>Transactions</h3>
+                <h3>Notifications de suppressions</h3>
                 <div class="d-flex  align-items-center justify-content-start">
                   <div class="mt-3 d-flex flex-row">
                     <div class="mx-3">
@@ -43,7 +41,7 @@ function Transac(){
                 <div class="p-3 bg-light shadow rounded-2">
                   <div class="table mt-3 w-100 rounded">
                     <div class="d-flex justify-content-between">
-                        <h4>Liste des transactions</h4>
+                        <h4>Liste des notifications</h4>
                       </div>
                         <div class="overflow-scroll">
                           <table class="table table-striped table-responsive">
@@ -52,25 +50,17 @@ function Transac(){
                                 <th scope="col"><span class="th-title">#</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Utilisateur</span>
+                                <th scope="col"><span class="th-title">Numéro de l'utilisateur</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Compagnie</span>
+                                <th scope="col"><span class="th-title">Motif de la demande</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Gare départ</span>
-                                  <i class="bx bx-expand-vertical"></i>
-                                </th>
-                                <th scope="col"><span class="th-title">Destination</span>
-                                  <i class="bx bx-expand-vertical"></i>
-                                </th>
-                                <th scope="col"><span class="th-title">Date réservation</span>
-                                  <i class="bx bx-expand-vertical"></i>
-                                </th>
-                                <th scope="col"><span class="th-title">Nombre de places</span>
+                                <th scope="col"><span class="th-title">Date de la demande</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                                 <th scope="col"><span class="th-title">Action</span>
+                                <i class="bx bx-expand-vertical"></i>
                                 </th>
                               </tr>
                             </thead>
@@ -83,32 +73,17 @@ function Transac(){
                                     </td>
                                     <td>
                                       <span>
-                                        Darwin
+                                        44954499
                                       </span>
                                     </td>
                                     <td>
                                       <span>
-                                        Gontougo
+                                        La fatigue
                                       </span>
                                     </td>
                                     <td>
                                       <span>
-                                        Bassam
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Bouake
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        15/12/2023
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        4
+                                        12/01/2024
                                       </span>
                                     </td>
                                     <td>
@@ -136,4 +111,5 @@ function Transac(){
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render();
-export default Transac;
+
+export default Notifs;
