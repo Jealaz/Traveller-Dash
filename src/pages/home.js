@@ -32,17 +32,27 @@ function Home (){
   const [nombreUser, setNombreUser] = useState(0);
 
   useEffect(() => {
-    Promise.all([
-      axios.get("http://192.168.1.8:3005/api/countUsers"),
-    ])
-    .then(([dataCountUser]) => {
-      const countUser = dataCountUser.data.countUser;
-      setNombreUser(countUser);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    axios.get("http://192.168.1.93:3005/api/countUsers")
+  .then((response) => {
+     console.log(response.data); // Log the response for debugging
+        const countUser = response.data.countUser;
+        setNombreUser(countUser);
+  })
+  .catch((error) => {
+    if (error.response) {
+      // The request was made, but the server responded with an error status code
+      console.error("Response Error:", error.response.data);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No Response:", error.request);
+    } else {
+      // Something happened in setting up the request
+      console.error("Request Setup Error:", error.message);
+    }
+  });
+
   }, []);
+  
 
 
   //Bar Statistiques
