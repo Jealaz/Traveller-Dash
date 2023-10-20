@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import the Axios library
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -27,6 +28,22 @@ ChartJS.register(
 
 
 function Home (){
+
+  const [nombreUser, setNombreUser] = useState(0);
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://192.168.1.8:3005/api/countUsers"),
+    ])
+    .then(([dataCountUser]) => {
+      const countUser = dataCountUser.data.countUser;
+      setNombreUser(countUser);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
 
   //Bar Statistiques
   const data ={
@@ -96,7 +113,7 @@ function Home (){
                           <center>Utilisateur</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center> 12045 </center>
+                          <center>{nombreUser}</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
