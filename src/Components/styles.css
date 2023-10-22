@@ -137,11 +137,11 @@ body.dark {
 }
 
 .menu_editor::before {
-  content: "Editeur";
+  content: "About Traveller";
 }
 
-.menu_setting::before {
-  content: "Paramètres";
+.menu_transac::before {
+  content: "Transactions news";
 }
 
 .menu_pro::before {

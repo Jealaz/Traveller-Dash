@@ -6,6 +6,8 @@ import Company from './pages/company';
 import Transac from './pages/transaction';
 import Createcomp from './pages/createcomp';
 import Notifs from './pages/notif';
+import Travel from './pages/travel';
+import Colis from './pages/colis';
 import Header from './Components/header';
 import Sidebar from './Components/sidebar';
 import './Components/styles.css';
@@ -24,6 +26,8 @@ export default function App() {
         <Route path='transaction' element={<Transac />}></Route>
         <Route path='createcomp' element={<Createcomp />}></Route>
         <Route path='notif' element={<Notifs />}></Route>
+        <Route path='travel' element={<Travel />}></Route>
+        <Route path='colis' element={<Colis />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from 'react-dom/client';
 import { Outlet, Link } from "react-router-dom";
-import { FaBell, FaUser, FaStore, FaHome, FaUserPlus, FaChartBar } from 'react-icons/fa';
+import { FaBell, FaUser, FaStore, FaHome, FaUserPlus, FaChartBar, FaBus, FaBox } from 'react-icons/fa';
 import './styles.css';
 
 
@@ -61,12 +61,23 @@ function Sidebar (){
                                     <span className="navlink">Compagnies</span>
                                 </Link>
                             </li>
+                    </ul>
+                    <ul className="menu_items">
+                        <div className="menu_title menu_transac"></div>
                             <li className="item">
-                                <Link to="/transaction" className="nav_link">    
+                                <Link to="/travel" className="nav_link">
                                     <span className="navlink_icon">
-                                        <FaChartBar />
+                                        <FaBus />
                                     </span>
-                                    <span className="navlink">Transactions</span>
+                                    <span className="navlink">Voyage</span>
+                                </Link>
+                            </li>
+                            <li className="item">
+                                <Link to="/colis" className="nav_link">
+                                    <span className="navlink_icon">
+                                        <FaBox />
+                                    </span>
+                                    <span className="navlink">Colis</span>
                                 </Link>
                             </li>
                     </ul>

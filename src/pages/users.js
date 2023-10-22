@@ -6,29 +6,8 @@ import Sidebar from '../Components/sidebar.js';
 
 
 
-class Users extends Component{
-  constructor(){
-    super();
-    this.state = {
-      company: [], //To store the data retrieved from the server
-    }
-  }
-
-  componentDidMount(){
-    //Make the API request to the server to get data
-    // eslint-disable-next-line no-undef
-    axios.get('http://192.168.1.66:3005/api/companies')
-      .then((response) =>{
-        //Successful response
-        this.setState({comapny: response.company});
-      })
-      .catch((error)=>{
-        //Handle any errors
-        console.error('Error fetching data:', error);
-        });
-      }
-
-    render(){
+function Users(){
+    
     return(
         <div>
             <Sidebar />
@@ -157,7 +136,7 @@ class Users extends Component{
         
     )
 }
-}
+
 
 
 export default Users;

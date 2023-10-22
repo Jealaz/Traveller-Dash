@@ -1,4 +1,4 @@
-import React, { Component }from 'react';
+import React, { Component, useState, useEffect }from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
@@ -6,8 +6,16 @@ import Sidebar from '../Components/sidebar.js';
 import axios from 'axios';
 
 
-class Company extends Component {
-  constructor(){
+function Company() {
+    const [companies, setCompanies] = useState([]);
+    useEffect (() => {
+      axios.get('http://192.168.1.68:3005/api/companies/${64f8e49acac9054111f5f394}').then((response) =>{
+        setCompanies(response.data);
+      })
+    })
+
+
+  /*constructor(){
     super();
     this.state = {
       company: [], //To store the data retrieved from the server
@@ -87,7 +95,7 @@ class Company extends Component {
               }*/
 
     //  Request Get to put information
-    render(){
+  
     return(
             <div>
             <Sidebar />
@@ -169,7 +177,7 @@ class Company extends Component {
                           </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                          {this.state.company.map((item) =>(
+                          {companies.map((item) =>(
                             <tr  key={item._id}>
                                 <td>
                                   <div class="form-check">
@@ -206,8 +214,9 @@ class Company extends Component {
           </div>
         )
         }
-}
 
 
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render();
 export default Company;

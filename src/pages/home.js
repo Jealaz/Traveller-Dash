@@ -27,17 +27,32 @@ ChartJS.register(
 );
 
 
-function Home (){
+function Home() {
 
   const [nombreUser, setNombreUser] = useState(0);
+  const [nombreCompany, setNombreCompany] = useState(0);
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.1.8:3005/api/countUsers"),
+      axios.get("http://192.168.1.68:3005/api/countUsers"),
     ])
     .then(([dataCountUser]) => {
       const countUser = dataCountUser.data.countUser;
       setNombreUser(countUser);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
+  //Count Company
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://192.168.1.68:3005/api/countCompany"),
+    ])
+    .then(([dataCountCompany]) => {
+      const countCompany = dataCountCompany.data.companyCount;
+      setNombreCompany(countCompany);
     })
     .catch((error) => {
       console.error(error);
@@ -121,7 +136,7 @@ function Home (){
                           <center>Companies</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center> 168 </center>
+                          <center>{nombreCompany}</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
