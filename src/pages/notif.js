@@ -1,12 +1,22 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import Sidebar from '../Components/sidebar.js';
+import axios from 'axios';
 
 
 
 function Notifs(){
+  const [data, setData] = useState([]);
+
+  //Get the info from the API
+  useEffect(() =>{
+      axios.get("http://192.168.1.68:3005/api/everyNotifInfo").then((response) =>{
+        setData(response.data);
+      });
+      }, []);
+
     return(
         <div>
             <Sidebar />
@@ -47,9 +57,6 @@ function Notifs(){
                           <table class="table table-striped table-responsive">
                             <thead>
                               <tr>
-                                <th scope="col"><span class="th-title">#</span>
-                                  <i class="bx bx-expand-vertical"></i>
-                                </th>
                                 <th scope="col"><span class="th-title">Numéro de l'utilisateur</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
@@ -65,36 +72,16 @@ function Notifs(){
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
+                              {data.map((data) =>
                                 <tr>
-                                    <td>
-                                      <div class="form-check">
-                                        <input class=" form-check-input" type="checkbox" name="" id="" />
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        44954499
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        La fatigue
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        12/01/2024
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <button type='button' className='btn btn-danger'>Supprimer</button>
-                                    </td>
-                                    <td>
-                                      <span>
-                                      </span>
-                                    </td>
+                                  <td>{data.tel}</td>
+                                  <td>{data.pattern}</td>
+                                  <td>{data.dateAdded}</td>
+                                  <td>
+                                    <button type='button' className='btn btn-danger'>Supprimer</button>
+                                  </td>
                                 </tr>
-
+                            )}
                             </tbody>
                           </table>
                         </div>

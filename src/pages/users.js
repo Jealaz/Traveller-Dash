@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Sidebar from '../Components/sidebar.js';
+import axios from 'axios';
 
 
 
 function Users(){
+  
+  const [data, setData] = useState([]);
+
+  //Get the info from the API
+  useEffect(() =>{
+      axios.get("http://192.168.1.68:3005/api/everyUserInfo").then((response) =>{
+        setData(response.data);
+      });
+      }, []);
     
     return(
         <div>
@@ -56,16 +66,13 @@ function Users(){
 
                     <thead>
                       <tr>
-                        <th scope="col"><span class="th-title">#</span>
+                        <th scope="col"><span class="th-title">Pseudo</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
-                        <th scope="col" colspan="2"><span class="th-title">Pseudo</span>
+                        <th scope="col"><span class="th-title">Résidence</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
-                        <th scope="col" colspan="2"><span class="th-title">Résidence</span>
-                          <i class="bx bx-expand-vertical"></i>
-                        </th>
-                        <th scope="col" colspan="2"><span class="th-title">Occupation</span>
+                        <th scope="col"><span class="th-title">Occupation</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
                         <th scope="col"><span class="th-title">Contact</span>
@@ -79,51 +86,18 @@ function Users(){
                       </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        <tr>
-                            <td>
-                              <div class="form-check">
-                                <input class=" form-check-input" type="checkbox" name="" id="" />
-                              </div>
-                            </td>
-                            <td>
-                              <span>
-                              </span>
-                            </td>
-                            <td>
-                              <div class="img" style={{maxHeight: "50px", maxWidth: "50px"}}>
-                                <img src="assets/users_img/<?php echo $getListeUsers_resultats->image_user; ?>" alt="" style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}} />
-                              </div>
-                            </td>
-                            <td>
-                              <span>
-                                Galagoue
-                              </span>
-                            </td>
-                            <td>
-                              <span>
-                                ses@gmail.com
-                              </span>
-                            </td>
-                            <td>
-                              <span>
-                                4444444444
-                              </span>
-                            </td>
-                            <td>
-                              <span>
-                                23/12/2023
-                              </span>
-                            </td>
-                            <td>
-                              <span>
-                                Marcory
-                              </span>
-                            </td>
+                      {data.map((data) =>
+                        <tr key={data.id}>
+                            <td>{data.pseudo}</td>
+                            <td>{data.residence}</td>
+                            <td>{data.occupation}</td>
+                            <td>{data.tel}</td>
+                            <td>{data.dateAdded}</td>
                             <td>
                               <button type='button' className='btn btn-danger'>Delete</button>
                             </td>
                         </tr>
-
+                      )}
                     </tbody>
                   </table>
                 </div>

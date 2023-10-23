@@ -31,6 +31,8 @@ function Home() {
 
   const [nombreUser, setNombreUser] = useState(0);
   const [nombreCompany, setNombreCompany] = useState(0);
+  const [nombreReserv, setReserv] = useState(0);
+  const [nombreNotif, setNotif] = useState(0);
 
   useEffect(() => {
     Promise.all([
@@ -59,6 +61,34 @@ function Home() {
     });
   }, []);
 
+  //Count Transactions
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://192.168.1.68:3005/api/countReservation"),
+    ])
+    .then(([dataCountReservation]) => {
+      const countReserv = dataCountReservation.data.countReservation;
+      setReserv(countReserv);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
+  
+  //Count Notification
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://192.168.1.68:3005/api/countNotifs"),
+    ])
+    .then(([dataCountNotifs]) => {
+      const countNotif = dataCountNotifs.data.countNotif;
+      setNotif(countNotif);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
 
   //Bar Statistiques
   const data ={
@@ -81,7 +111,7 @@ function Home() {
     labels : ['Company', 'Users'],
     datasets : [{
       label : 'Type account',
-      data : [48, 52],
+      data : [nombreCompany, nombreUser],
       backgroundColor : ['blue', 'orange'],
       borderColor : 'transparent'
     }]
@@ -144,7 +174,7 @@ function Home() {
                           <center>Transactions</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center> 3200</center>
+                          <center>{nombreReserv}</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
@@ -152,7 +182,7 @@ function Home() {
                           <center>Notifications</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center> 300 </center>
+                          <center>{nombreNotif}</center>
                         </span>
                       </div>
                     </div>

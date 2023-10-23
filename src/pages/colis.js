@@ -1,12 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import Sidebar from '../Components/sidebar.js';
+import axios from 'axios';
 
 
 
 function Colis(){
+
+  const [data, setData] = useState([]);
+
+  //Get the info from the API
+  useEffect(() =>{
+      axios.get("http://192.168.1.68:3005/api/everyColisInfo").then((response) =>{
+        setData(response.data);
+      });
+      }, []);
     return(
         <div>
             <Sidebar />
@@ -77,17 +87,19 @@ function Colis(){
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr>
-                                    <td>2222</td>
-                                    <td>UTB</td>
-                                    <td>072222222</td>
-                                    <td>098888888</td>
-                                    <td>Abidjan</td>
-                                    <td>Bouaké</td>
-                                    <td>3000</td>
-                                    <td>29000</td>
-                                    <td>04/12/2022</td>
+                              {data.map((data) => 
+                                <tr key={data.id}>
+                                    <td>{data.code}</td>
+                                    <td>{data.compagnie}</td>
+                                    <td>{data.tel}</td>
+                                    <td>{data.tel_destinataire}</td>
+                                    <td>{data.gare}</td>
+                                    <td>{data.destination}</td>
+                                    <td>{data.valeur_colis}</td>
+                                    <td>{data.montant}</td>
+                                    <td>{data.datePay}</td>
                                 </tr>
+                              )}
                             </tbody>
                           </table>
                         </div>

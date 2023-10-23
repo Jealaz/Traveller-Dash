@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import Sidebar from '../Components/sidebar.js';
+import axios from 'axios';
 
 
 
 function Transac(){
-  
+  const [data, setData] = useState([]);
+
+  //Get the info from the API
+  useEffect(() =>{
+      axios.get("http://192.168.1.68:3005/api/everyReservationInfo").then((response) =>{
+        setData(response.data);
+      });
+      }, []);
 
     return(
         <div>
@@ -49,10 +57,10 @@ function Transac(){
                           <table class="table table-striped table-responsive">
                             <thead>
                               <tr>
-                                <th scope="col"><span class="th-title">#</span>
+                                <th scope="col"><span class="th-title">Code</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Utilisateur</span>
+                                <th scope="col"><span class="th-title">Contact utilisateur</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                                 <th scope="col"><span class="th-title">Compagnie</span>
@@ -64,10 +72,13 @@ function Transac(){
                                 <th scope="col"><span class="th-title">Destination</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
+                                <th scope="col"><span class="th-title">Nombre de places</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
                                 <th scope="col"><span class="th-title">Date réservation</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Nombre de places</span>
+                                <th scope="col"><span class="th-title">Heure de départ</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                                 <th scope="col"><span class="th-title">Action</span>
@@ -75,51 +86,21 @@ function Transac(){
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr>
-                                    <td>
-                                      <div class="form-check">
-                                        <input class=" form-check-input" type="checkbox" name="" id="" />
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Darwin
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Gontougo
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Bassam
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Bouake
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        15/12/2023
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        4
-                                      </span>
-                                    </td>
+                              {data.map((data) =>
+                                <tr key={data.id}>
+                                    <td>{data.code}</td>
+                                    <td>{data.tel}</td>
+                                    <td>{data.compagnie}</td>
+                                    <td>{data.gare}</td>
+                                    <td>{data.destination}</td>
+                                    <td>{data.nombre_place}</td>
+                                    <td>{data.dateReserv}</td>
+                                    <td>{data.heure_depart}</td>
                                     <td>
                                       <button type='button' className='btn btn-danger'>Supprimer</button>
                                     </td>
-                                    <td>
-                                      <span>
-                                      </span>
-                                    </td>
                                 </tr>
-
+                              )}
                             </tbody>
                           </table>
                         </div>
