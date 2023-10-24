@@ -66,20 +66,14 @@ function Notifs(){
                                 <th scope="col"><span class="th-title">Date de la demande</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Action</span>
-                                <i class="bx bx-expand-vertical"></i>
-                                </th>
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
                               {data.map((data) =>
-                                <tr>
+                                <tr key={data.id}>
                                   <td>{data.tel}</td>
                                   <td>{data.pattern}</td>
                                   <td>{data.dateAdded}</td>
-                                  <td>
-                                    <button type='button' className='btn btn-danger'>Supprimer</button>
-                                  </td>
                                 </tr>
                             )}
                             </tbody>

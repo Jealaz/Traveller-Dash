@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 
-function Transac(){
+function Reserv(){
   const [data, setData] = useState([]);
 
   //Get the info from the API
@@ -23,7 +23,7 @@ function Transac(){
 
             <section class="main-content">
               <div id="pre-content" class="p-4">
-                <h3>Transactions</h3>
+                <h3>Réservations</h3>
                 <div class="d-flex  align-items-center justify-content-start">
                   <div class="mt-3 d-flex flex-row">
                     <div class="mx-3">
@@ -51,7 +51,7 @@ function Transac(){
                 <div class="p-3 bg-light shadow rounded-2">
                   <div class="table mt-3 w-100 rounded">
                     <div class="d-flex justify-content-between">
-                        <h4>Liste des transactions</h4>
+                        <h4>Liste des réservations</h4>
                       </div>
                         <div class="overflow-scroll">
                           <table class="table table-striped table-responsive">
@@ -64,6 +64,9 @@ function Transac(){
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                                 <th scope="col"><span class="th-title">Compagnie</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
+                                <th scope="col"><span class="th-title">Nature</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                                 <th scope="col"><span class="th-title">Gare départ</span>
@@ -81,24 +84,20 @@ function Transac(){
                                 <th scope="col"><span class="th-title">Heure de départ</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Action</span>
-                                </th>
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
                               {data.map((data) =>
                                 <tr key={data.id}>
-                                    <td>{data.code}</td>
-                                    <td>{data.tel}</td>
-                                    <td>{data.compagnie}</td>
-                                    <td>{data.gare}</td>
-                                    <td>{data.destination}</td>
-                                    <td>{data.nombre_place}</td>
-                                    <td>{data.dateReserv}</td>
-                                    <td>{data.heure_depart}</td>
-                                    <td>
-                                      <button type='button' className='btn btn-danger'>Supprimer</button>
-                                    </td>
+                                  <td>{data.code}</td>
+                                  <td>{data.tel}</td>
+                                  <td>{data.compagnie}</td>
+                                  <td>{data.nature}</td>
+                                  <td>{data.gare}</td>
+                                  <td>{data.destination}</td>
+                                  <td>{data.nombre_place}</td>
+                                  <td>{data.dateReserv}</td>
+                                  <td>{data.heure_depart}</td>
                                 </tr>
                               )}
                             </tbody>
@@ -117,4 +116,4 @@ function Transac(){
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render();
-export default Transac;
+export default Reserv;

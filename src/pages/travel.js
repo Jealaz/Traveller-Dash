@@ -62,6 +62,9 @@ function Travel(){
                                 <th scope="col"><span class="th-title">Compagnie</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
+                                <th scope="col"><span class="th-title">Nature</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
                                 <th scope="col"><span class="th-title">Contact utilisateur</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
@@ -90,6 +93,7 @@ function Travel(){
                                 <tr key={data.id}>
                                     <td>{data.code}</td>
                                     <td>{data.compagnie}</td>
+                                    <td>{data.nature}</td>
                                     <td>{data.tel}</td>
                                     <td>{data.gare}</td>
                                     <td>{data.destination}</td>

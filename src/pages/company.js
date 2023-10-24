@@ -14,6 +14,18 @@ function Company() {
       setData(response.data);
     })
   }, []);
+
+  const deleteCompany = (id) => {
+    axios.delete(`http://192.168.1.68:3005/api/deleteCompanybyID/${id}`)
+    .then((response) => {
+      console.log('Utilisateur supprimé avec succès', response.data);
+      // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
+      window.location.reload(); // Recharge la page après la suppression
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la suppression :', error);
+    });
+}
   
     return(
             <div>
@@ -89,30 +101,31 @@ function Company() {
                               <i class="bx bx-expand-vertical"></i>
                             </th>
                             <th scope="col"><span class="th-title">Action</span>
+                              <i class="bx bx-expand-vertical"></i>
                             </th>
                           </tr>
                         </thead>
                         <tbody class="table-group-divider">
                           {data.map((item) =>(
                             <tr  key={item._id}>
-                                <td>
-                                  <div class="img" style={{maxHeight: "50px", maxWidth: "50px"}}>
-                                    <img src="assets/users_img/<?php echo $getListeUsers_resultats->image_user; ?>" alt="" style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}} />
-                                  </div>
-                                </td>
-                                <td>{item.compagnie}</td>
-                                <td>{item.email}</td>
-                                <td>{item.destinationTravel}</td>
-                                <td>{item.gareTravel}</td>
-                                <td>{item.tarifTravel}</td>
-                                <td>{item.destinationColis}</td>
-                                <td>{item.gareColis}</td>
-                                <td>{item.TarifColis}</td>
-                                <td>{item.depart}</td>
-                                <td>{item.dateAdded}</td>
-                                <td>
-                                  <button type='button' className='btn btn-danger'>Delete</button>
-                                </td>
+                              <td>
+                                <div class="img" style={{maxHeight: "50px", maxWidth: "50px"}}>
+                                  <img src="assets/users_img/<?php echo $getListeUsers_resultats->image_user; ?>" alt="" style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}} />
+                                </div>
+                              </td>
+                              <td>{item.compagnie}</td>
+                              <td>{item.email}</td>
+                              <td>{item.destinationTravel}</td>
+                              <td>{item.gareTravel}</td>
+                              <td>{item.tarifTravel}</td>
+                              <td>{item.destinationColis}</td>
+                              <td>{item.gareColis}</td>
+                              <td>{item.TarifColis}</td>
+                              <td>{item.depart}</td>
+                              <td>{item.dateAdded}</td>
+                              <td>
+                              <button type='button' onClick={()=>deleteCompany(item.id)} className='btn btn-danger'>Delete</button>
+                            </td>
                             </tr>
                           ))}
                         </tbody>

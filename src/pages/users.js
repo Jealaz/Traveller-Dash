@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -17,6 +17,19 @@ function Users(){
         setData(response.data);
       });
       }, []);
+
+  //Delete User using ID
+  const deleteUser = (id) => {
+      axios.delete(`http://192.168.1.68:3005/api/deleteUserbyID/${id}`)
+      .then((response) => {
+        console.log('Utilisateur supprimé avec succès', response.data);
+        // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
+        window.location.reload(); // Recharge la page après la suppression
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la suppression :', error);
+      });
+  }
     
     return(
         <div>
@@ -86,15 +99,15 @@ function Users(){
                       </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                      {data.map((data) =>
-                        <tr key={data.id}>
-                            <td>{data.pseudo}</td>
-                            <td>{data.residence}</td>
-                            <td>{data.occupation}</td>
-                            <td>{data.tel}</td>
-                            <td>{data.dateAdded}</td>
+                      {data.map((userData) =>
+                        <tr key={userData.id}>
+                            <td>{userData.pseudo}</td>
+                            <td>{userData.residence}</td>
+                            <td>{userData.occupation}</td>
+                            <td>{userData.tel}</td>
+                            <td>{userData.dateAdded}</td>
                             <td>
-                              <button type='button' className='btn btn-danger'>Delete</button>
+                              <button type='button' onClick={()=>deleteUser(userData.id)} className='btn btn-danger'>Delete</button>
                             </td>
                         </tr>
                       )}
@@ -112,5 +125,6 @@ function Users(){
 }
 
 
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render();
 export default Users;

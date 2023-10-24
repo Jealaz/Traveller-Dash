@@ -3,7 +3,7 @@ import './App.css';
 import Home from './pages/home';
 import Users from './pages/users';
 import Company from './pages/company';
-import Transac from './pages/transaction';
+import Reserv from './pages/reservation';
 import Createcomp from './pages/createcomp';
 import Notifs from './pages/notif';
 import Travel from './pages/travel';
@@ -23,7 +23,7 @@ export default function App() {
         <Route path='sidebar' element={<Sidebar />}></Route>
         <Route path='users' element={<Users />}></Route>
         <Route path='company' element={<Company />}></Route>
-        <Route path='transaction' element={<Transac />}></Route>
+        <Route path='reservation' element={<Reserv />}></Route>
         <Route path='createcomp' element={<Createcomp />}></Route>
         <Route path='notif' element={<Notifs />}></Route>
         <Route path='travel' element={<Travel />}></Route>

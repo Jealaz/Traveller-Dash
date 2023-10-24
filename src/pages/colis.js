@@ -63,6 +63,9 @@ function Colis(){
                                 <th scope="col"><span class="th-title">Compagnie</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
+                                <th scope="col"><span class="th-title">Nature</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
                                 <th scope="col"><span class="th-title">Contact expéditeur</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
@@ -91,6 +94,7 @@ function Colis(){
                                 <tr key={data.id}>
                                     <td>{data.code}</td>
                                     <td>{data.compagnie}</td>
+                                    <td>{data.nature}</td>
                                     <td>{data.tel}</td>
                                     <td>{data.tel_destinataire}</td>
                                     <td>{data.gare}</td>

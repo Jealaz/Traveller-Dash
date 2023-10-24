@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios'; // Import the Axios library
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Sidebar from '../Components/sidebar.js';
-import { useRef } from 'react'
 import {
   Chart as ChartJS,
   ArcElement,
@@ -31,9 +30,14 @@ function Home() {
 
   const [nombreUser, setNombreUser] = useState(0);
   const [nombreCompany, setNombreCompany] = useState(0);
-  const [nombreReserv, setReserv] = useState(0);
   const [nombreNotif, setNotif] = useState(0);
+  const [nombreTransac, setTran] = useState(0);
+  const [data, setData] = useState({});
+  const [years, setYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [monthlyData, setMonthlyData] = useState([]);
 
+  //Count User
   useEffect(() => {
     Promise.all([
       axios.get("http://192.168.1.68:3005/api/countUsers"),
@@ -46,6 +50,7 @@ function Home() {
       console.error(error);
     });
   }, []);
+  
 
   //Count Company
   useEffect(() => {
@@ -64,16 +69,15 @@ function Home() {
   //Count Transactions
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.1.68:3005/api/countReservation"),
-    ])
-    .then(([dataCountReservation]) => {
-      const countReserv = dataCountReservation.data.countReservation;
-      setReserv(countReserv);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }, []);
+      axios.get("http://192.168.1.68:3005/api/countTransaction"),
+      ])
+      .then(([dataCountTransactions]) => {
+        setNotif(dataCountTransactions.data.transactionsCount)
+        })
+        .catch((error) => {
+          console.error(error);
+          });
+  }, []); 
   
   //Count Notification
   useEffect(() => {
@@ -81,29 +85,63 @@ function Home() {
       axios.get("http://192.168.1.68:3005/api/countNotifs"),
     ])
     .then(([dataCountNotifs]) => {
-      const countNotif = dataCountNotifs.data.countNotif;
-      setNotif(countNotif);
+      setNotif(dataCountNotifs.data.notifsCount);
     })
     .catch((error) => {
       console.error(error);
     });
   }, []);
 
+  //Bar Statistiques(Using variables and others)
 
-  //Bar Statistiques
-  const data ={
-    labels : ['January', 'Feb', 'March', 'April', 
-              'May', 'June', 'July', 'Aug', 
-              'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets : [{
-      label : 'Tickets sold',
-      data : [300, 122, 199, 123, 245, 192, 992, 121, 1003, 300, 1223, 2427],
-      borderColor : 'dark',
-      backgroundColor : 'blue',
-      borderWidth: 1,
-      links : ['https://www.chartjs3.com', 'https://www.chartjs.com', 'https://www.chartjs3.com', 'https://www.chartjs3.com']
-    }]
+  useEffect(() => {
+    // Récupérer les années distinctes de la base de données
+    axios.get(`http://192.168.1.68:3005/api/dataTravel`)
+      .then((response) => {
+        setYears(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
+  useEffect(() => {
+    // Récupérer les données de la base de données pour l'année sélectionnée
+    axios.get(`http://192.168.1.68:3005/api/dataTravel/${selectedYear}`)
+      .then((response) => {
+        const monthlyTotal = new Array(12).fill(0);
+        response.data.forEach((item) => {
+          const month = new Date(item.datePay).getMonth();
+          monthlyTotal[month] += item.montant;
+        });
+        setMonthlyData(monthlyTotal);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [selectedYear]);
+
+  useEffect(() => {
+    // Créer les données du graphique
+    setData({
+      labels: [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ],
+      datasets: [
+        {
+          label: `Montant total en ${selectedYear}`,
+          data: monthlyData,
+          borderColor: 'dark',
+          backgroundColor: 'blue',
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, [monthlyData, selectedYear]);
+
+  const handleYearChange = (event) => {
+    setSelectedYear(parseInt(event.target.value));
   };
 
   //Doughnut Statistiques
@@ -134,23 +172,6 @@ function Home() {
              <Sidebar />
               <section className="main-content p-xl-1 pt-1 col-md-12 d-flex bg-white">
                 <div id="contents" class="col-12 col-xl-12 mx-2 d-flex flex-wrap justify-content-evenly  rounded-5">
-                  <div class="hder mb-2" hidden  style={{paddingTop: "20px", width:"90%", display:"flex",justifyContent:"space-around",height:"30px"}}>
-                    <h6 style={{marginRight: "0px"}}>
-                      <label for="periode">Periode :</label>
-                      <select name="perio" value="month" style={{cursor:"pointer"}}>
-                        <option value="today">Aujourd'hui</option>
-                        <option value="week">Cette semaine</option>
-                        <option value="month">Ce mois</option>
-                        <option value="trim">Ce trimestre</option>
-                        <option value="sem">Ce semestre</option>
-                        <option value="year">Cette année</option>
-                      </select>
-                    </h6>
-                    <h6>
-                      <input class="btn btn-success" type="button" value="save" />
-                      <input class="btn btn-danger" type="button" value="reset" />
-                    </h6>
-                  </div>
                   <div className="container my-3">
                     <div className="row">
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
@@ -174,7 +195,7 @@ function Home() {
                           <center>Transactions</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center>{nombreReserv}</center>
+                          <center>{nombreTransac}</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
@@ -193,6 +214,14 @@ function Home() {
                       <div className="card-body">
                         <div className="header" style={{height:"100%"}}>
                           <h5 className="card-title" style={{fontWeight: "bold"}}>Réservation tickets par mois</h5>
+                          <label htmlFor="selectYear">Sélectionner une année : </label>
+                          <select id="selectYear" onChange={handleYearChange} value={selectedYear}>
+                            {years.map((year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            ))}
+                          </select>
                           <div className="c2 rounded " style={{height:"100%"}}>
                             <div className="chart-container" style={{position: "relative", height:"100%", width:"100%"}}>
                               <div style={{width: "100% !important", height:"100% !important;"}}>

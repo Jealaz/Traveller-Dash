@@ -1,12 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReactDom from 'react-dom/client';
 import { Outlet, Link } from "react-router-dom";
-import { FaBell, FaUser, FaStore, FaHome, FaUserPlus, FaChartBar, FaBus, FaBox, FaExchangeAlt } from 'react-icons/fa';
+import { FaBell, FaUser, FaStore, FaHome, FaUserPlus, FaBus, FaBox, FaExchangeAlt } from 'react-icons/fa';
 import './styles.css';
+import axios from 'axios';
 
 
 
 function Sidebar (){
+
+    const [nombreNotif, setNotif] = useState(0);
+
+    //Count notifications
+    useEffect(() => {
+        Promise.all([
+          axios.get("http://192.168.1.68:3005/api/countNotifs"),
+        ])
+        .then(([dataCountNotifs]) => {
+          const countNotif = dataCountNotifs.data.countNotif;
+          setNotif(countNotif);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
+
+    const handleNotificationClick = () => {
+        setNotif(0); // Réinitialise le nombre de notifications après avoir cliqué sur le lien
+    };
+    
     return(
             <nav className="sidebar">
                 <div className="menu_content">
@@ -38,11 +60,14 @@ function Sidebar (){
                     <ul className="menu_items">
                         <div className="menu_title menu_editor"></div>
                             <li className="item">
-                                <Link to="/notif" className="nav_link">
+                                <Link to="/notif" className="nav_link" onClick={handleNotificationClick}>
                                     <span className="navlink_icon">
                                         <FaBell />
                                     </span>
                                     <span className="navlink">Notifications</span>
+                                    {nombreNotif >0 &&
+                                        <span className="badge">{nombreNotif}</span>
+                                    }
                                 </Link>
                             </li>
                             <li className="item">
@@ -81,11 +106,11 @@ function Sidebar (){
                                 </Link>
                             </li>
                             <li className="item">
-                                <Link to="/transaction" className="nav_link">
+                                <Link to="/reservation" className="nav_link">
                                     <span className="navlink_icon">
                                         <FaExchangeAlt />
                                     </span>
-                                    <span className="navlink">Transactions</span>
+                                    <span className="navlink">Réservations</span>
                                 </Link>
                             </li>
                     </ul>
