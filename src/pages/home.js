@@ -197,7 +197,7 @@ function Home() {
                           <center>Notifications</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center>{nombreCompany}</center>
+                          <center>{nombreNotif}</center>
                         </span>
                       </div>
                     </div>
