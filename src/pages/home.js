@@ -13,8 +13,8 @@ import {
   Tooltip,
   Legend
 }from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import {Bar, getElementAtEvent} from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
+import {Bar, getElementAtEvent } from 'react-chartjs-2';
 
 ChartJS.register(
   ArcElement,
@@ -25,17 +25,15 @@ ChartJS.register(
   Legend
 );
 
-
 function Home() {
 
   const [nombreUser, setNombreUser] = useState(0);
   const [nombreCompany, setNombreCompany] = useState(0);
-  const [nombreNotif, setNotif] = useState(0);
-  const [nombreTransac, setTran] = useState(0);
-  const [data, setData] = useState({});
+  const [nombreNotif, setNombreNotif] = useState(0);
+  const [nombreTransac, setNombreTransac] = useState(0);
   const [years, setYears] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [monthlyData, setMonthlyData] = useState([]);
+  const [monthlyData, setMonthlyData] = useState();
 
   //Count User
   useEffect(() => {
@@ -72,7 +70,7 @@ function Home() {
       axios.get("http://192.168.1.68:3005/api/countTransaction"),
       ])
       .then(([dataCountTransactions]) => {
-        setNotif(dataCountTransactions.data.transactionsCount)
+        setNombreTransac(dataCountTransactions.data.transactionsCount)
         })
         .catch((error) => {
           console.error(error);
@@ -85,7 +83,7 @@ function Home() {
       axios.get("http://192.168.1.68:3005/api/countNotifs"),
     ])
     .then(([dataCountNotifs]) => {
-      setNotif(dataCountNotifs.data.notifsCount);
+      setNombreNotif(dataCountNotifs.data.notifsCount);
     })
     .catch((error) => {
       console.error(error);
@@ -93,10 +91,8 @@ function Home() {
   }, []);
 
   //Bar Statistiques(Using variables and others)
-
   useEffect(() => {
-    // Récupérer les années distinctes de la base de données
-    axios.get(`http://192.168.1.68:3005/api/dataTravel`)
+    axios.get("http://192.168.1.68:3005/api/dataTravel")
       .then((response) => {
         setYears(response.data);
       })
@@ -105,14 +101,14 @@ function Home() {
       });
   }, []);
 
+  // Fetch Monthly Data
   useEffect(() => {
-    // Récupérer les données de la base de données pour l'année sélectionnée
     axios.get(`http://192.168.1.68:3005/api/dataTravel/${selectedYear}`)
       .then((response) => {
         const monthlyTotal = new Array(12).fill(0);
         response.data.forEach((item) => {
           const month = new Date(item.datePay).getMonth();
-          monthlyTotal[month] += item.montant;
+          monthlyTotal[month] += item.nombre_place;
         });
         setMonthlyData(monthlyTotal);
       })
@@ -121,42 +117,38 @@ function Home() {
       });
   }, [selectedYear]);
 
-  useEffect(() => {
-    // Créer les données du graphique
-    setData({
+  // Create Bar Chart Data
+  const data = {
       labels: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
       ],
       datasets: [
         {
-          label: `Montant total en ${selectedYear}`,
+          label: `Total place achetée`,
           data: monthlyData,
           borderColor: 'dark',
           backgroundColor: 'blue',
           borderWidth: 1,
         },
       ],
-    });
-  }, [monthlyData, selectedYear]);
+    };
 
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value));
   };
 
-  //Doughnut Statistiques
   const datas = {
-    labels : ['Company', 'Users'],
-    datasets : [{
-      label : 'Type account',
-      data : [nombreCompany, nombreUser],
-      backgroundColor : ['blue', 'orange'],
-      borderColor : 'transparent'
-    }]
-  }
-
-  const options = {
+    labels: ['Company', 'Users'],
+    datasets: [{
+      label: 'Type account',
+      data: [nombreCompany, nombreUser],
+      backgroundColor: ['blue', 'orange'],
+      borderColor: 'transparent',
+    }],
   };
+
+  const options = {};
 
   const chartRef = useRef();
   const onClick = (event) => {
@@ -243,7 +235,7 @@ function Home() {
                   <div className="col-12 px-2 col-md-5 col-xl-3 mx-1 mt-2 h-3">
                     <div className="card" style={{flexDirection: "column",height:"340p",overflow: "hidden", border:"0px"}}>
                       <div className="card-body">
-                        <h5 className="card-title" style={{fontWeight: "bold"}}>Types de comptes (%)</h5>
+                        <h5 className="card-title" style={{fontWeight: "bold"}}>Types de comptes</h5>
                           <div className="c1 rounded " style={{height:"90%"}}>
                             <div className="chart-container" style={{position: "relative", height:"90%", width:"100%"}}>
                               <Doughnut 

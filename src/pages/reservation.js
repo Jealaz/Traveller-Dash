@@ -81,6 +81,9 @@ function Reserv(){
                                 <th scope="col"><span class="th-title">Date réservation</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
+                                <th scope="col"><span class="th-title">Heure de la réservation</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
                                 <th scope="col"><span class="th-title">Heure de départ</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
@@ -97,6 +100,7 @@ function Reserv(){
                                   <td>{data.destination}</td>
                                   <td>{data.nombre_place}</td>
                                   <td>{data.dateReserv}</td>
+                                  <td>{data.timePay}</td>
                                   <td>{data.heure_depart}</td>
                                 </tr>
                               )}

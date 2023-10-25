@@ -86,6 +86,9 @@ function Travel(){
                                 <th scope="col"><span class="th-title">Date de payment</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
+                                <th scope="col"><span class="th-title">Heure de paiement</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
                               </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -101,6 +104,7 @@ function Travel(){
                                     <td>{data.montant}</td>
                                     <td>{data.heure_depart}</td>
                                     <td>{data.datePay}</td>
+                                    <td>{data.timePay}</td>
                                 </tr>
                                 )}
                             </tbody>

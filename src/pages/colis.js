@@ -84,7 +84,10 @@ function Colis(){
                                 <th scope="col"><span class="th-title">Montant total</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
-                                <th scope="col"><span class="th-title">Date de payment</span>
+                                <th scope="col"><span class="th-title">Date de paiement</span>
+                                  <i class="bx bx-expand-vertical"></i>
+                                </th>
+                                <th scope="col"><span class="th-title">Heure de paiement</span>
                                   <i class="bx bx-expand-vertical"></i>
                                 </th>
                               </tr>
@@ -102,6 +105,7 @@ function Colis(){
                                     <td>{data.valeur_colis}</td>
                                     <td>{data.montant}</td>
                                     <td>{data.datePay}</td>
+                                    <td>{data.timePay}</td>
                                 </tr>
                               )}
                             </tbody>
