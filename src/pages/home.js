@@ -69,8 +69,9 @@ function Home() {
     Promise.all([
       axios.get("http://192.168.1.68:3005/api/countTransaction"),
       ])
-      .then(([dataCountTransactions]) => {
-        setNombreTransac(dataCountTransactions.data.transactionsCount)
+      .then(([dataCountTransaction]) => {
+        const countTransaction = dataCountTransaction.data.transactionsCount;
+        setNombreTransac(countTransaction);
         })
         .catch((error) => {
           console.error(error);
@@ -81,14 +82,15 @@ function Home() {
   useEffect(() => {
     Promise.all([
       axios.get("http://192.168.1.68:3005/api/countNotifs"),
-    ])
-    .then(([dataCountNotifs]) => {
-      setNombreNotif(dataCountNotifs.data.notifsCount);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }, []);
+      ])
+      .then(([dataCountNotifs]) => {
+        const countNotifs = dataCountNotifs.data.notificationsCount;
+        setNombreNotif(countNotifs);
+        })
+        .catch((error) => {
+          console.error(error);
+          });
+      }, []);
 
   //Bar Statistiques(Using variables and others)
   useEffect(() => {
@@ -166,15 +168,15 @@ function Home() {
                 <div id="contents" class="col-12 col-xl-12 mx-2 d-flex flex-wrap justify-content-evenly  rounded-5">
                   <div className="container my-3">
                     <div className="row">
-                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
+                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"blue 10px solid"}}>
                         <h5>
-                          <center>Utilisateur</center>
+                          <center>Utilisateurs</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
                           <center>{nombreUser}</center>
                         </span>
                       </div>
-                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
+                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"orange 10px solid"}}>
                         <h5>
                           <center>Companies</center>
                         </h5>
@@ -182,7 +184,7 @@ function Home() {
                           <center>{nombreCompany}</center>
                         </span>
                       </div>
-                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
+                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"brown 10px solid"}}>
                         <h5>
                           <center>Transactions</center>
                         </h5>
@@ -190,12 +192,12 @@ function Home() {
                           <center>{nombreTransac}</center>
                         </span>
                       </div>
-                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer"}}>
+                      <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"aqua 10px solid"}}>
                         <h5>
                           <center>Notifications</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center>{nombreNotif}</center>
+                          <center>{nombreCompany}</center>
                         </span>
                       </div>
                     </div>
