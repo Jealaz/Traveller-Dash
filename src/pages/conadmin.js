@@ -59,7 +59,7 @@ function Connect(props){
                     <input type="password" className="inputField" name="password" value={formInput.password} onChange={handleInputChange} placeholder="Password" />
                 </div>
               
-                <button id="button">Submit</button>
+                <button type='Submit' id="button">Submit</button>
                 {error && <div className="error-message">{error}</div>}
             </form>
 
