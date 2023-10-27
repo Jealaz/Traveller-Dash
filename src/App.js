@@ -8,6 +8,7 @@ import Createcomp from './pages/createcomp';
 import Notifs from './pages/notif';
 import Travel from './pages/travel';
 import Colis from './pages/colis';
+import Connect from './pages/conadmin';
 import Header from './Components/header';
 import Sidebar from './Components/sidebar';
 import './Components/styles.css';
@@ -18,7 +19,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='home' index element={<Home />}></Route>
+        <Route path='home' element={<Home />}></Route>
+        <Route path='conadmin' index element={<Connect />}></Route>
         <Route path='header' element={<Header />}></Route>
         <Route path='sidebar' element={<Sidebar />}></Route>
         <Route path='users' element={<Users />}></Route>
