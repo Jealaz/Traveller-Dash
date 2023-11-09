@@ -12,7 +12,7 @@ function Notifs(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.1.68:3005/api/everyNotifInfo").then((response) =>{
+      axios.get("http://192.168.1.16:3005/api/everyNotifInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
@@ -73,7 +73,7 @@ function Notifs(){
                                 <tr key={data.id}>
                                   <td>{data.tel}</td>
                                   <td>{data.pattern}</td>
-                                  <td>{data.dateAdded}</td>
+                                  <td>{new Date(data.dateAdded).toLocaleDateString()}</td>
                                 </tr>
                             )}
                             </tbody>

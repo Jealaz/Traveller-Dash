@@ -2,73 +2,71 @@ import React, {useState} from 'react';
 import ReactDOM  from 'react-dom/client';
 import axios from 'axios';
 import '../Components/style3.css';
+//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
+function Connect() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Use useNavigate for navigation
+  const [message, setMessage] = useState('');
 
-function Connect(props){
+  const handleLogin = async () => {
+    try {
+      // Créer un objet avec les données de l'utilisateur
+      const userData = {
+        email: email,
+        password: password,
+      };
 
-      //Déclaration de toutes les variables à receuillir dans la base de données
-  const [formInput, setFormInput] = useState({
-    email: '',
-    password: '',
-  });
+      // Faire une requête POST à votre API
+      const response = await axios.post('http://192.168.1.16:3005/api/loginAdmin', userData);
 
-  //Message d'erreurs en cas d'erreur
-  const [error, setError] = useState('');
+      // Traiter la réponse de l'API
+      if (response.status === 200) {
+        navigate('/home'); // Use navigate for redirection
+        // Login réussi, vous pouvez gérer la redirection ou afficher un message de succès ici.
+      } else {
+        // Gérer d'autres cas de réponse (par exemple, mauvais mot de passe, email incorrect, etc.)
+      }
+    } catch (error) {
+      // Gérer les erreurs de requête ici
+      alert('Mot de passe ou email incorrect veuillez réessayez');
 
-  //Receuillir les données fournies lors du remplissage du formulaire
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInput({
-      ...formInput,
-      [name]: value,
-    });
+    }
   };
 
-  //Vérifier la conformité des entrées avec ceux de la base de données
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-        try{
-            const response = await axios.post('http://192.168.1.68:3005/api/AdminLogin', formInput);
-            if(response.data.success){
-                //Redirirection si il existe
-                window.location.href('/home');
-            }else{
-                setError("La connexion a échoué. Vérifiez vos informations d'identification.");
-            }
-        }catch (error){
-                console.error("Erreur lors de la requête d'authentification : " + error);
-            }
-        }
-    
-
-    return(
-        <>
-            <form className='form_main' onSubmit={handleSubmit}>
-                <p className="heading">Connect</p>
-                <div className="inputContainer">
-                    <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
-                    <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
-                    </svg>
-                <input type="text" className="inputField" name="email" value={formInput.email} onChange={handleInputChange} placeholder="Email" />
-                </div>
-    
-                <div className="inputContainer">
-                    <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
-                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
-                    </svg>
-                    <input type="password" className="inputField" name="password" value={formInput.password} onChange={handleInputChange} placeholder="Password" />
-                </div>
-              
-                <button type='Submit' id="button">Submit</button>
-                {error && <div className="error-message">{error}</div>}
-            </form>
-
-        </>
-    )
+  return (
+    <div className="form_main">
+      <h1 className="heading">Connexion</h1>
+      <div className="inputContainer">
+        <span className="inputIcon">📧</span>
+        <input
+          className="inputField"
+          type="text"
+          placeholder="Nom d'utilisateur ou e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="inputContainer">
+        <span className="inputIcon">🔒</span>
+        <input
+          className="inputField"
+          type="password"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <button id="button" onClick={handleLogin}>
+        Se connecter
+      </button>
+      <a className="forgotLink" href="forgot">
+        Mot de passe oublié?
+      </a>
+    </div>
+  );
 }
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render();
-
-export default Connect; 
+export default Connect;

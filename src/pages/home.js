@@ -30,7 +30,7 @@ function Home() {
   const [nombreUser, setNombreUser] = useState(0);
   const [nombreCompany, setNombreCompany] = useState(0);
   const [nombreNotif, setNombreNotif] = useState(0);
-  const [nombreTransac, setNombreTransac] = useState(0);
+  const [transactions, setTransactions] = useState(0);
   const [years, setYears] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [monthlyData, setMonthlyData] = useState();
@@ -38,7 +38,7 @@ function Home() {
   //Count User
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.1.68:3005/api/countUsers"),
+      axios.get("http://192.168.1.16:3005/api/countUsers"),
     ])
     .then(([dataCountUser]) => {
       const countUser = dataCountUser.data.countUser;
@@ -53,7 +53,7 @@ function Home() {
   //Count Company
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.1.68:3005/api/countCompany"),
+      axios.get("http://192.168.1.16:3005/api/countCompany"),
     ])
     .then(([dataCountCompany]) => {
       const countCompany = dataCountCompany.data.companyCount;
@@ -66,35 +66,31 @@ function Home() {
 
   //Count Transactions
   useEffect(() => {
-    Promise.all([
-      axios.get("http://192.168.1.68:3005/api/countTransaction"),
-      ])
-      .then(([dataCountTransaction]) => {
-        const countTransaction = dataCountTransaction.data.transactionsCount;
-        setNombreTransac(countTransaction);
-        })
-        .catch((error) => {
-          console.error(error);
-          });
-  }, []); 
+    axios
+      .get("http://192.168.1.16:3005/api/countTransaction")
+      .then((response) => {
+        setTransactions(response.data.Transactions);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  
   
   //Count Notification
   useEffect(() => {
-    Promise.all([
-      axios.get("http://192.168.1.68:3005/api/countNotifs"),
-      ])
-      .then(([dataCountNotifs]) => {
-        const countNotifs = dataCountNotifs.data.notificationsCount;
-        setNombreNotif(countNotifs);
-        })
-        .catch((error) => {
-          console.error(error);
-          });
-      }, []);
+    axios.get("http://192.168.1.16:3005/api/countNotifs")
+      .then((response) => {
+       setNombreNotif(response.data.notifications);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   //Bar Statistiques(Using variables and others)
   useEffect(() => {
-    axios.get("http://192.168.1.68:3005/api/dataTravel")
+    axios.get("http://192.168.1.16:3005/api/dataTravel")
       .then((response) => {
         setYears(response.data);
       })
@@ -105,7 +101,7 @@ function Home() {
 
   // Fetch Monthly Data
   useEffect(() => {
-    axios.get(`http://192.168.1.68:3005/api/dataTravel/${selectedYear}`)
+    axios.get(`http://192.168.1.16:3005/api/dataTravel/${selectedYear}`)
       .then((response) => {
         const monthlyTotal = new Array(12).fill(0);
         response.data.forEach((item) => {
@@ -189,7 +185,7 @@ function Home() {
                           <center>Transactions</center>
                         </h5>
                         <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
-                          <center>{nombreTransac}</center>
+                          <center>{transactions}</center>
                         </span>
                       </div>
                       <div className="col bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"aqua 10px solid"}}>

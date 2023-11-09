@@ -12,7 +12,7 @@ function Travel(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.1.68:3005/api/everyTravelInfo").then((response) =>{
+      axios.get("http://192.168.1.16:3005/api/everyTravelInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
@@ -97,13 +97,13 @@ function Travel(){
                                     <td>{data.code}</td>
                                     <td>{data.compagnie}</td>
                                     <td>{data.nature}</td>
-                                    <td>{data.tel}</td>
+                                    <td>{data.phone}</td>
                                     <td>{data.gare}</td>
                                     <td>{data.destination}</td>
                                     <td>{data.nombre_place}</td>
                                     <td>{data.montant}</td>
                                     <td>{data.heure_depart}</td>
-                                    <td>{data.datePay}</td>
+                                    <td>{new Date(data.datePay).toLocaleDateString()}</td>
                                     <td>{data.timePay}</td>
                                 </tr>
                                 )}

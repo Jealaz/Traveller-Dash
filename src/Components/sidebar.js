@@ -14,7 +14,7 @@ function Sidebar (){
     //Count notifications
     useEffect(() => {
         Promise.all([
-          axios.get("http://192.168.1.68:3005/api/countNotifs"),
+          axios.get("http://192.168.1.21:3005/api/countNotifs"),
         ])
         .then(([dataCountNotifs]) => {
           const countNotif = dataCountNotifs.data.countNotif;
@@ -113,10 +113,16 @@ function Sidebar (){
                                     <span className="navlink">Réservations</span>
                                 </Link>
                             </li>
+                            
                     </ul>
                     <div className="bottom_content">
                         <div className="bottom collapse_sidebar">
+
+                            <Link to="/conadmin">
+
                             <span> Disconnect </span>
+
+                            </Link>
                             <i className="bx-bx-log-out"></i>
                         </div>
                     </div>

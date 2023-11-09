@@ -13,7 +13,7 @@ function Colis(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.1.68:3005/api/everyColisInfo").then((response) =>{
+      axios.get("http://192.168.1.16:3005/api/everyColisInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
@@ -104,7 +104,7 @@ function Colis(){
                                     <td>{data.destination}</td>
                                     <td>{data.valeur_colis}</td>
                                     <td>{data.montant}</td>
-                                    <td>{data.datePay}</td>
+                                    <td>{new Date(data.datePay).toLocaleDateString()}</td>
                                     <td>{data.timePay}</td>
                                 </tr>
                               )}

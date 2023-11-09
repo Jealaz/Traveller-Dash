@@ -13,14 +13,14 @@ function Users(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.1.68:3005/api/everyUserInfo").then((response) =>{
+      axios.get("http://192.168.1.16:3005/api/everyUserInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
 
   //Delete User using ID
   const deleteUser = (id) => {
-      axios.delete(`http://192.168.1.68:3005/api/deleteUserbyID/${id}`)
+      axios.delete(`http://192.168.1.16:3005/api/deleteUserbyID/${id}`)
       .then((response) => {
         console.log('Utilisateur supprimé avec succès', response.data);
         // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
@@ -105,10 +105,8 @@ function Users(){
                             <td>{userData.residence}</td>
                             <td>{userData.occupation}</td>
                             <td>{userData.tel}</td>
-                            <td>{userData.dateAdded}</td>
-                            <td>
-                              <button type='button' onClick={()=>deleteUser(userData.id)} className='btn btn-danger'>Delete</button>
-                            </td>
+                            <td>{new Date(userData.dateAdded).toLocaleDateString()}</td>
+                           
                         </tr>
                       )}
                     </tbody>

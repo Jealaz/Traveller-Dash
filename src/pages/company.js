@@ -10,13 +10,13 @@ function Company() {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    axios.get('http://192.168.1.68:3005/api/everyCompanyInfo').then((response) => {
+    axios.get('http://192.168.1.16:3005/api/everyCompanyInfo').then((response) => {
       setData(response.data);
     })
   }, []);
 
   const deleteCompany = (id) => {
-    axios.delete(`http://192.168.1.68:3005/api/deleteCompanybyID/${id}`)
+    axios.delete(`http://192.168.1.16:3005/api/deleteCompanybyID/${id}`)
     .then((response) => {
       console.log('Utilisateur supprimé avec succès', response.data);
       // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
