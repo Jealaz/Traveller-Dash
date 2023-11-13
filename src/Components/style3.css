@@ -77,7 +77,7 @@
     font-weight: 500;
   }
   
-  #button {
+  button {
     z-index: 2;
     position: relative;
     width: 100%;
@@ -92,7 +92,7 @@
     cursor: pointer;
   }
   
-  #button:hover {
+  button:hover {
     background-color: rgb(26, 66, 176);
   }
   

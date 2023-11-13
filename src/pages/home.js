@@ -53,7 +53,7 @@ function Home() {
   //Count Company
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.1.16:3005/api/countCompany"),
+      axios.get("http://192.168.1.68:3005/api/countCompany"),
     ])
     .then(([dataCountCompany]) => {
       const countCompany = dataCountCompany.data.companyCount;
@@ -199,8 +199,8 @@ function Home() {
                     </div>
                   </div>
 
-                  <div className="col-12 px-2 col-xl-8 my-2">
-                    <div className="card" style={{display:"flex",flexDirection:"column",height:"340px",overflow: "hidden",border: "0px"}}>
+                  <div className="col-12 px-5 col-xl-8  py-2">
+                    <div className="card" style={{display:"flex",flexDirection:"column",height:"100%",overflow: "hidden",border: "0px"}}>
                       <div className="card-body">
                         <div className="header" style={{height:"100%"}}>
                           <h5 className="card-title" style={{fontWeight: "bold"}}>Réservation tickets par mois</h5>
@@ -214,7 +214,7 @@ function Home() {
                           </select>
                           <div className="c2 rounded " style={{height:"100%"}}>
                             <div className="chart-container" style={{position: "relative", height:"100%", width:"100%"}}>
-                              <div style={{width: "100% !important", height:"100% !important;"}}>
+                              <div style={{width: "100% !important", height:"100%;"}}>
                                 <Bar
                                   data = {data}
                                   options = {options}
