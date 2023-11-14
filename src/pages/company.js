@@ -7,16 +7,38 @@ import axios from 'axios';
 
 
 function Company() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [travel, setTravelCount] = useState([0]);
+  const [reservation, setReservationCount] = useState([0]);
+  const [colis, setColisCount] = useState([0]);
+
+  //Get informations from Statistics
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://192.168.44.1:3005/api/statistics');
+        const data = response.data;
+        console.log("Statistics", data);
+
+          setTravelCount(data.travelCount);
+          setReservationCount(data.reservationCount);
+          setColisCount(data.colisCount);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des statistiques :", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Le tableau vide en second argument signifie que cela s'exécutera seulement une fois au montage du composant
 
   useEffect(() => {
-    axios.get('http://192.168.1.16:3005/api/everyCompanyInfo').then((response) => {
+    axios.get('http://192.168.44.1:3005/api/everyCompanyInfo').then((response) => {
       setData(response.data);
     })
   }, []);
 
   const deleteCompany = (id) => {
-    axios.delete(`http://192.168.1.16:3005/api/deleteCompanybyID/${id}`)
+    axios.delete(`http://192.168.44.1:3005/api/deleteCompanybyID/${id}`)
     .then((response) => {
       console.log('Utilisateur supprimé avec succès', response.data);
       // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
@@ -31,85 +53,91 @@ function Company() {
             <div>
             <Sidebar />
 
-            <section class="main-content">
-              <div id="pre-content" class="p-4">
-                <h3>Compagniess</h3>
-                <div class="d-flex  align-items-center justify-content-start">
-                  <div class="mt-3 d-flex flex-row">
-                    <div class="mx-3">
-                      <button class="btn btn-warning">Imprimer <i class="bx bx-printer"></i></button>
+            <section className="main-content">
+              <div id="pre-content" className="p-4">
+                <h3>Compagnies</h3>
+                <div className="d-flex  align-items-center justify-content-start">
+                  <div className="mt-3 d-flex flex-row">
+                    <div className="col-4 bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"blue 10px solid"}}>
+                      <h5>
+                        <center>Pourcentage voyage</center>
+                      </h5>
+                      <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                        <center>{travel} %</center>
+                      </span>
+                    </div>
+                    <div className="col-4 bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"blue 10px solid"}}>
+                      <h5>
+                        <center>Pourcentage réservation</center>
+                      </h5>
+                      <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                        <center>{reservation} %</center>
+                      </span>
+                    </div>
+                    <div className="col-4 bg-white shadow-lg mx-3 rounded-3 h-5" style={{cursor:"pointer", borderLeft:"blue 10px solid"}}>
+                      <h5>
+                        <center>Pourcentage Colis</center>
+                      </h5>
+                      <span style={{fontStyle: "italic", fontSize:"30px", fontWeight:"lighter", color:"orange"}}>
+                        <center>{colis} %</center>
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="form_sup_client bg-red h-100 position-fixed top-0 start-0 w-100" style={{zIndex: "1010", backgroundColor: "rgba(0, 0, 0, 0.6)", display:"none"}}>
-                <div class="form_sup_client2 col-md-6 p-5  mt-5 position-absolute bg-white top-50 start-50 translate-middle rounded" style={{backgroundColor: "var(--sidebar-color)"}}>
-                  <h2 class="text-center mb-4" style={{color: "var(--text-color)"}}>Voulez-vous vraiment supprimer cet utilisateur ?
-                  </h2>
-
-                  <div class="row d-flex mt-5 justify-content-evenly align-items-center">
-                    <div class="col-md-4  d-flex justify-content-evenly align-items-center mb-3">
-                      <button class="btn btn-primary w-100" id="bbb" ariaLabel="false">Annuler</button>
-                    </div>
-                    <div class="col-md-4  d-flex justify-content-evenly align-items-center mb-3">
-                      <button class="btn btn-danger w-100" id="aaa" ariaLabel="true">Supprimer</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="content" class="p-3">
-                <div class="p-3 bg-light shadow rounded-2">
-                  <div class="table mt-3 w-100 rounded">
-                    <div class="d-flex justify-content-between">
+              <div id="content" className="p-3">
+                <div className="p-3 bg-light shadow rounded-2">
+                  <div className="table mt-3 w-100 rounded">
+                    <div className="d-flex justify-content-between">
                         <h4>Liste des compagnies</h4>
                     </div>
-                    <div class="overflow-scroll">
-                      <table class="table table-striped table-responsive">
+                    <div className="overflow-scroll">
+                      <table className="table table-striped table-responsive">
                         <thead>
                           <tr>
-                            <th scope="col"><span class="th-title">Logo</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Logo</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Compagnie</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Compagnie</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Email</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Email</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Destination de voyage</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Destination de voyage</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Gare de voyage</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Gare de voyage</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Prix du voyage</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Prix du voyage</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Destination du colis</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Destination du colis</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Gare du colis</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Gare du colis</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Prix du colis</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Prix du colis</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Heure de départ</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Heure de départ</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Date Insc</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Date Insc</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
-                            <th scope="col"><span class="th-title">Action</span>
-                              <i class="bx bx-expand-vertical"></i>
+                            <th scope="col"><span className="th-title">Action</span>
+                              <i className="bx bx-expand-vertical"></i>
                             </th>
                           </tr>
                         </thead>
-                        <tbody class="table-group-divider">
+                        <tbody className="table-group-divider">
                           {data.map((item) =>(
                             <tr  key={item._id}>
                               <td>
-                                <div class="img" style={{maxHeight: "50px", maxWidth: "50px"}}>
+                                <div className="img" style={{maxHeight: "50px", maxWidth: "50px"}}>
                                   <img src="assets/users_img/<?php echo $getListeUsers_resultats->image_user; ?>" alt="" style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}} />
                                 </div>
                               </td>

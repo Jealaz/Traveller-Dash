@@ -20,7 +20,7 @@ function Connect() {
       };
 
       // Faire une requête POST à votre API
-      const response = await axios.post('http://192.168.1.16:3005/api/loginAdmin', userData);
+      const response = await axios.post('http://192.168.44.1:3005/api/loginAdmin', userData);
 
       // Traiter la réponse de l'API
       if (response.status === 200) {

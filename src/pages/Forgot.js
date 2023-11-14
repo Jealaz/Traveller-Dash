@@ -12,7 +12,7 @@ function Forgot() {
     e.preventDefault();
 
     // Make an Axios POST request to your password reset API
-    axios.post('http://192.168.1.16:3005/api/forgotAdmin', { email })
+    axios.post('http://192.168.44.1:3005/api/forgotAdmin', { email })
       .then((response) => {
         // Assuming your API returns a success message, set the message state accordingly
         setMessage(response.data.message);

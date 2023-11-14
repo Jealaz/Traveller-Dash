@@ -45,7 +45,7 @@ function Createcomp(){
     e.preventDefault();
     
     try {
-      const response = await axios.post('http://192.168.1.16:3005/api/register1', formData);
+      const response = await axios.post('http://192.168.44.1:3005/api/register1', formData);
       if (response.data.exists){
         setError("Compagnie déja existante");
       }else{

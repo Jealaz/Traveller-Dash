@@ -13,14 +13,14 @@ function Users(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.1.16:3005/api/everyUserInfo").then((response) =>{
+      axios.get("http://192.168.44.1:3005/api/everyUserInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
 
   //Delete User using ID
   const deleteUser = (id) => {
-      axios.delete(`http://192.168.1.16:3005/api/deleteUserbyID/${id}`)
+      axios.delete(`http://192.168.44.1:3005/api/deleteUserbyID/${id}`)
       .then((response) => {
         console.log('Utilisateur supprimé avec succès', response.data);
         // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
@@ -94,8 +94,6 @@ function Users(){
                         <th scope="col"><span class="th-title">Date Insc</span>
                           <i class="bx bx-expand-vertical"></i>
                         </th>
-                        <th scope="col"><span class="th-title">Action</span>
-                        </th>
                       </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -106,7 +104,6 @@ function Users(){
                             <td>{userData.occupation}</td>
                             <td>{userData.tel}</td>
                             <td>{new Date(userData.dateAdded).toLocaleDateString()}</td>
-                           
                         </tr>
                       )}
                     </tbody>
