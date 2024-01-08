@@ -14,7 +14,7 @@ function Sidebar (){
     //Count notifications
     useEffect(() => {
         Promise.all([
-          axios.get("http://192.168.1.21:3005/api/countNotifs"),
+          axios.get("https://xnova-back-end.onrender.com/api/user/countNotifs"),
         ])
         .then(([dataCountNotifs]) => {
           const countNotif = dataCountNotifs.data.countNotif;

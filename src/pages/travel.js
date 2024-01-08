@@ -12,7 +12,7 @@ function Travel(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.44.1:3005/api/everyTravelInfo").then((response) =>{
+      axios.get("https://xnova-back-end.onrender.com/api/user/everyTravelInfo").then((response) =>{
         setData(response.data);
       });
       }, []);

@@ -43,7 +43,7 @@ function Home() {
   //Count User
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.44.1:3005/api/countUsers"),
+      axios.get("https://xnova-back-end.onrender.com/api/user/countUsers"),
     ])
     .then(([dataCountUser]) => {
       const countUser = dataCountUser.data.countUser;
@@ -59,7 +59,7 @@ function Home() {
   useEffect(() => {
     const fetchRankedCompanies = async () => {
       try {
-        const response = await axios.get('http://192.168.44.1:3005/api/rankingCompany');
+        const response = await axios.get('https://xnova-back-end.onrender.com/api/user/rankingCompany');
         const data = response.data;
   
         const names = data.map(item => item.compagnia);
@@ -78,7 +78,7 @@ function Home() {
   //Count Company
   useEffect(() => {
     Promise.all([
-      axios.get("http://192.168.44.1:3005/api/countCompany"),
+      axios.get("https://xnova-back-end.onrender.com/api/user/countCompany"),
     ])
     .then(([dataCountCompany]) => {
       const countCompany = dataCountCompany.data.companyCount;
@@ -92,7 +92,7 @@ function Home() {
   //Count Transactions
   useEffect(() => {
     axios
-      .get("http://192.168.44.1:3005/api/countTransaction")
+      .get("https://xnova-back-end.onrender.com/api/user/countTransaction")
       .then((response) => {
         setTransactions(response.data.Transactions);
       })
@@ -104,7 +104,7 @@ function Home() {
   
   //Count Notification
   useEffect(() => {
-    axios.get("http://192.168.44.1:3005/api/countNotifs")
+    axios.get("https://xnova-back-end.onrender.com/api/user/countNotifs")
       .then((response) => {
        setNombreNotif(response.data.notifications);
       })
@@ -115,7 +115,7 @@ function Home() {
 
   //Line Statistiques(Using variables and others)
   useEffect(() => {
-    axios.get("http://192.168.44.1:3005/api/dataTravel")
+    axios.get("https://xnova-back-end.onrender.com/api/user/dataTravel")
       .then((response) => {
         setYears(response.data);
       })
@@ -126,7 +126,7 @@ function Home() {
 
   // Fetch Monthly Data
   useEffect(() => {
-    axios.get(`http://192.168.44.1:3005/api/dataTravel/${selectedYear}`)
+    axios.get(`https://xnova-back-end.onrender.com/api/user/dataTravel/${selectedYear}`)
       .then((response) => {
         const travelsByMonth = new Array(12).fill(0);
   
@@ -145,7 +145,7 @@ function Home() {
 
   // Fetch Monthly Data for reservations
   useEffect(() => {
-    axios.get(`http://192.168.44.1:3005/api/dataReservation/${selectedYear}`)
+    axios.get(`https://xnova-back-end.onrender.com/api/user/dataReservation/${selectedYear}`)
       .then((response) => {
         const monthlyCount = new Array(12).fill(0);
   

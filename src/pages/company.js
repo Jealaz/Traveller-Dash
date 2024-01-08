@@ -16,7 +16,7 @@ function Company() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.44.1:3005/api/statistics');
+        const response = await axios.get('https://xnova-back-end.onrender.com/api/user/statistics');
         const data = response.data;
         console.log("Statistics", data);
 
@@ -32,13 +32,13 @@ function Company() {
   }, []); // Le tableau vide en second argument signifie que cela s'exécutera seulement une fois au montage du composant
 
   useEffect(() => {
-    axios.get('http://192.168.44.1:3005/api/everyCompanyInfo').then((response) => {
+    axios.get('https://xnova-back-end.onrender.com/api/company/everyCompanyInfo').then((response) => {
       setData(response.data);
     })
   }, []);
 
   const deleteCompany = (id) => {
-    axios.delete(`http://192.168.44.1:3005/api/deleteCompanybyID/${id}`)
+    axios.delete(`https://xnova-back-end.onrender.com/api/company/deleteCompanybyID/${id}`)
     .then((response) => {
       console.log('Utilisateur supprimé avec succès', response.data);
       // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires

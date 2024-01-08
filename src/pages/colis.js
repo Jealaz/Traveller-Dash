@@ -13,7 +13,7 @@ function Colis(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.44.1:3005/api/everyColisInfo").then((response) =>{
+      axios.get('https://xnova-back-end.onrender.com/api/user/everyColisInfo').then((response) =>{
         setData(response.data);
       });
       }, []);

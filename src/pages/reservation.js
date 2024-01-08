@@ -12,7 +12,7 @@ function Reserv(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.44.1:3005/api/everyReservationInfo").then((response) =>{
+      axios.get("https://xnova-back-end.onrender.com/api/user/everyReservationInfo").then((response) =>{
         setData(response.data);
       });
       }, []);

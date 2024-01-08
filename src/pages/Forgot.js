@@ -12,7 +12,7 @@ function Forgot() {
     e.preventDefault();
 
     // Make an Axios POST request to your password reset API
-    axios.post('http://192.168.44.1:3005/api/forgotAdmin', { email })
+    axios.post('https://xnova-back-end.onrender.com/api/admin/forgotAdmin', { email })
       .then((response) => {
         // Assuming your API returns a success message, set the message state accordingly
         setMessage(response.data.message);

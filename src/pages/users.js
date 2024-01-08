@@ -13,14 +13,14 @@ function Users(){
 
   //Get the info from the API
   useEffect(() =>{
-      axios.get("http://192.168.44.1:3005/api/everyUserInfo").then((response) =>{
+      axios.get("https://xnova-back-end.onrender.com/api/user/everyUserInfo").then((response) =>{
         setData(response.data);
       });
       }, []);
 
   //Delete User using ID
   const deleteUser = (id) => {
-      axios.delete(`http://192.168.44.1:3005/api/deleteUserbyID/${id}`)
+      axios.delete(`https://xnova-back-end.onrender.com/api/deleteUserbyID/${id}`)
       .then((response) => {
         console.log('Utilisateur supprimé avec succès', response.data);
         // Mettez à jour votre liste d'utilisateurs ou effectuez d'autres actions nécessaires
