@@ -391,7 +391,7 @@ function Home() {
                     <div className="card" style={{display:"flex",flexDirection:"column",height:"100%",overflow: "hidden",border: "0px"}}>
                       <div className="card-body">
                         <div className="header" style={{height:"100%"}}>
-                          <h5 className="card-title" style={{fontWeight: "bold"}}>Courbes comparatives( Ventes et achats )</h5>
+                          <h5 className="card-title" style={{fontWeight: "bold"}}>Courbes comparatives( Ventes et réservation )</h5>
                           <label htmlFor="selectYear">Sélectionner une année : </label>
                           <select id="selectYear" onChange={handleYearChange} value={selectedYear}>
                             {years.map((year) => (

@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Form, Button } from 'react-bootstrap';
-import axios from 'axios'; // Import Axios for making API requests
+import { Container, Form, Button, Spinner } from 'react-bootstrap';
+import axios from 'axios';
 import '../Components/style4.css';
 
 function Forgot() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Track loading state
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submitting the form
 
-    // Make an Axios POST request to your password reset API
     axios.post('https://xnova-back-end.onrender.com/api/admin/forgotAdmin', { email })
       .then((response) => {
-        // Assuming your API returns a success message, set the message state accordingly
         setMessage(response.data.message);
       })
       .catch((error) => {
-        // Handle API request error here
         setMessage('Error resetting the password. Please try again.');
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false after API request completes
       });
   };
 
@@ -41,6 +43,7 @@ function Forgot() {
           Réinitialiser le mot de passe
         </Button>
       </Form>
+      {loading && <Spinner animation="border" variant="primary" />} {/* Show spinner while loading */}
       {message && <p>{message}</p>}
     </Container>
   );
